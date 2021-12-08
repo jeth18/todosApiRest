@@ -3,18 +3,17 @@ package com.projet.todos.Controllers;
 import com.projet.todos.Repository.ITodoRespository;
 import com.projet.todos.models.Response;
 import com.projet.todos.models.Todo;
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.logging.Logger;
 
 @RestController
+@Validated
 public class TodosController {
     @Autowired
     private ITodoRespository repo;
@@ -39,9 +38,9 @@ public class TodosController {
     }
 
     @PostMapping("/todo")
-    ResponseEntity<Response> newTodo(@RequestBody Todo todo) {
+    ResponseEntity<Response> newTodo(@Valid @RequestBody Todo todo) {
         response = new Response(repo.save(todo), 200, "Success");
-        log.info("Todo agregada: "+ response.getData());
+        log.info("Todo save: "+ response.getData());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
