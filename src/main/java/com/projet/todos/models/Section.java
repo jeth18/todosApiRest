@@ -3,23 +3,18 @@ package com.projet.todos.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
-public class Todo {
+public class Section {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String name;
 
-    @Column(nullable = false)
-    private String description;
-
-    @Column(nullable = false)
-    private boolean active;
-
-
-    protected Todo() { }
+    @OneToMany( targetEntity=Todo.class )
+    private List<Todo> todoList;
 }
