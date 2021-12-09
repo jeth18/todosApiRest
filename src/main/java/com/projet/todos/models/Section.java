@@ -5,7 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -20,6 +21,6 @@ public class Section {
 
     @Valid
     @NotNull(message = "Lista requerida")
-    @OneToMany( targetEntity=Todo.class )
-    private List<Todo> todoList;
+    @OneToMany( targetEntity=Todo.class, cascade = CascadeType.ALL)
+    private Set<Todo> todoList = new HashSet<>();
 }

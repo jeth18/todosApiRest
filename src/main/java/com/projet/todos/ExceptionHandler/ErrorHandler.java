@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -25,13 +26,19 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PropertyValueException.class)
     public ResponseEntity<Response> nullPointerException(RuntimeException e) {
-        result = new Response("[Exception Response] - Exception: " + e.getMessage(), 400, "Error");
+        result = new Response("Error in send data", 400, "Error");
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<Response> noExistClass(RuntimeException e) {
-        result = new Response("[Exception Response] - Exception: " + e.getMessage(), 400, "Error");
+        result = new Response("Error in set data", 400, "Error");
+        return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<Response> noExistElement(RuntimeException e) {
+        result = new Response("Not found element", 400, "Error");
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
     }
 

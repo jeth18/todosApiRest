@@ -1,0 +1,18 @@
+# trailing slash is important!
+# src/main/resources/application.yml
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          auth0:
+            client-id: y1QFyPTqv5tbVCoqM45xKeIHot9dFbJ4
+            client-secret: LoJ1UUHwne7O_SGKddhUtbqsqkEgsZYKlKMs7VAGbNdzC38DHqNfSsSUlB1PQ1Wb
+            scope:
+              - openid
+              - profile
+              - email
+        provider:
+          auth0:
+            # trailing slash is important!
+            issuer-uri: https://dev-hk60at4r.us.auth0.com/
