@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.logging.Logger;
 
+@RequestMapping("/api")
 @RestController
 @Validated
 public class TodosController {
@@ -21,7 +22,6 @@ public class TodosController {
     Logger log = Logger.getLogger(TodosController.class.getName());
     Response response;
     private HttpStatus status = null;
-
 
     @RequestMapping(value = "/todo")
     ResponseEntity<Response> findAll(){

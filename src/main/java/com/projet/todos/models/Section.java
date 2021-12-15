@@ -11,6 +11,7 @@ import java.util.Set;
 @Entity
 @Data
 public class Section {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,4 +24,8 @@ public class Section {
     @NotNull(message = "Lista requerida")
     @OneToMany( targetEntity=Todo.class, cascade = CascadeType.ALL)
     private Set<Todo> todoList = new HashSet<>();
+
+    @NotNull
+    private String idUser;
+
 }

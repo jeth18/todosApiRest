@@ -23,6 +23,8 @@ public class Todo {
     @Column(nullable = false)
     private boolean active;
 
+    @NotNull
+    private String idUser;
 
     protected Todo() { }
 }
