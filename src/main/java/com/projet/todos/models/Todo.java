@@ -24,7 +24,7 @@ public class Todo {
     private boolean active;
 
     @NotNull
-    private String idUser;
+    private Long idUser;
 
     protected Todo() { }
 }

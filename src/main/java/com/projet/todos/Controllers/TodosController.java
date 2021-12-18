@@ -3,6 +3,7 @@ package com.projet.todos.Controllers;
 import com.projet.todos.Repository.ITodoRespository;
 import com.projet.todos.models.Response;
 import com.projet.todos.models.Todo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,11 @@ import java.util.logging.Logger;
 @RequestMapping("/api")
 @RestController
 @Validated
+@Slf4j
 public class TodosController {
     @Autowired
     private ITodoRespository repo;
 
-    Logger log = Logger.getLogger(TodosController.class.getName());
     Response response;
     private HttpStatus status = null;
 
@@ -74,6 +75,19 @@ public class TodosController {
             response = new Response(200, "Success");
         }
 
+        return new ResponseEntity<>(response, status);
+    }
+
+    @GetMapping("/user/{id}/todo")
+    ResponseEntity<Response> getTodoByIdUser(@PathVariable Long id) {
+        if(id < 0 || id == null) {
+            status = HttpStatus.BAD_REQUEST;
+            response = new Response("Could not found user", 400, "Error");
+        } else {
+            status = HttpStatus.OK;
+            response = new Response(repo.findAllByIdUser(id),200, "Success");
+            log.info("Todos by user: {}", response.getData());
+        }
         return new ResponseEntity<>(response, status);
     }
 }

@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +25,8 @@ import java.util.logging.Logger;
 @RestController
 @RequiredArgsConstructor @Transactional @Slf4j
 public class UserController implements UserDetailsService {
+
+    private final String AUTHORIZATION = "Authorization";
 
     @Autowired
     private IUserRepository repo;
@@ -48,6 +52,12 @@ public class UserController implements UserDetailsService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/roles/addtousers")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        String authorizarionHeader = request.getHeader(AUTHORIZATION);
+
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -61,4 +71,5 @@ public class UserController implements UserDetailsService {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
+
 }
