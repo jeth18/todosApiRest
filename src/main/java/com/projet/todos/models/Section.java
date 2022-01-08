@@ -26,6 +26,6 @@ public class Section {
     private Set<Todo> todoList = new HashSet<>();
 
     @NotNull
-    private String idUser;
+    private Long idUser;
 
 }

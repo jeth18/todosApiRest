@@ -4,6 +4,7 @@ import com.projet.todos.Repository.ISectionRepository;
 import com.projet.todos.models.Response;
 import com.projet.todos.models.Section;
 import com.projet.todos.models.Todo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +12,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
-import java.util.logging.Logger;
 
 @RequestMapping("/api")
 @RestController
 @Validated
+@Slf4j
 public class SectionController {
 
     @Autowired
     ISectionRepository repo;
-
-    Logger log = Logger.getLogger(TodosController.class.getName());
     Response response;
     private HttpStatus status = null;
 
@@ -87,5 +86,18 @@ public class SectionController {
             response = new Response("Delete section with todos",201, "Success");
         }
         return new ResponseEntity<>(response,status);
+    }
+
+    @GetMapping("/user/{id}/section")
+    ResponseEntity<Response> getSectionByIdUser(@PathVariable Long id) {
+        if(id < 0 || id == null) {
+            status = HttpStatus.BAD_REQUEST;
+            response = new Response("Could not found user", 400, "Error");
+        } else {
+            status = HttpStatus.OK;
+            response = new Response(repo.findAllByIdUser(id),200, "Success");
+            log.info("Section by user: {}", response.getData());
+        }
+        return new ResponseEntity<>(response, status);
     }
 }

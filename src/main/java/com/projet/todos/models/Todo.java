@@ -21,6 +21,9 @@ public class Todo {
     private String description;
 
     @Column(nullable = false)
+    private String fecha;
+
+    @Column(nullable = false)
     private boolean active;
 
     @NotNull
